@@ -1,5 +1,8 @@
 import * as React from 'react';
 import './App.css';
+import { Footer } from './presenters/Footer';
+import { ToDoList } from './containers/ToDoList';
+import { AddTodo } from './containers/AddTodo';
 
 const logo = require('./logo.svg');
 
@@ -11,9 +14,9 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <AddTodo/>
+        <ToDoList />
+        <Footer/>
       </div>
     );
   }

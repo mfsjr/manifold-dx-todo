@@ -1,6 +1,6 @@
-import { AddTodoViewSfc, AddTodoView, AddTodoViewProps } from '../presenters/AddTodoView';
+import { AddTodoView, AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
 import { AppData, appState, ToDo } from '../AppState';
-import { ContainerComponent, MappingAction, StateObject, StateCrudAction, Action, ActionId } from 'manifold-dx';
+import { Action, ActionId, ContainerComponent, MappingAction, StateCrudAction, StateObject } from 'manifold-dx';
 
 export interface AddTodoProps { }
 

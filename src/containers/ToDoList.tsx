@@ -62,9 +62,4 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     let toggleAction = new StateCrudAction(ActionId.UPDATE_PROPERTY, this.appData, 'todos', newTodos);
     appState.getManager().actionPerform(toggleAction);
   }
-
-  componentDidUpdate() {
-    // console.log(`List Container updated`)
-  }
-
 }

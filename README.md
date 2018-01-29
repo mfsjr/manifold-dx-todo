@@ -1,5 +1,7 @@
 #ToDo MVC using Manifold-dx for React
 
+This app is an example of state management using [manifold-dx](https://github.com/mfsjr/manifold-dx).
+
 ## Configuration
 - This was built from create-react-app along with Microsoft's TypeScript conversion script:
   `create-react-app manifold-dx-todo --scripts-version=react-scripts-ts`

@@ -32,6 +32,5 @@ export class ToDoItem extends React.PureComponent<ToDoViewProps> {
         {this.props.text}
       </li>
     );
-
   }
 }

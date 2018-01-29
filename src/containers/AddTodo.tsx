@@ -1,4 +1,4 @@
-import { AddTodoView, AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
+import { AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
 import { AppData, appState, ToDo } from '../AppState';
 import { Action, ActionId, ContainerComponent, MappingAction, StateCrudAction, StateObject } from 'manifold-dx';
 
@@ -37,9 +37,5 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
    */
   public createViewProps(): AddTodoViewProps {
     return { addTodo: this.addTodo.bind(this) };
-  }
-  
-  public createView(viewProps: AddTodoViewProps): AddTodoView {
-    return new AddTodoView(this.viewProps);
   }
 }

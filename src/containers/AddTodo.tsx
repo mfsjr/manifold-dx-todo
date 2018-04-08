@@ -1,19 +1,20 @@
 import { AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
 import { AppData, appState, ToDo } from '../AppState';
-import { Action, ActionId, ContainerComponent, MappingAction, StateCrudAction, StateObject } from 'manifold-dx';
+import { Action, ContainerComponent, getCrudCreator, StateObject } from 'manifold-dx';
+import { GenericContainerMappingTypes } from 'manifold-dx/dist/src/components/ContainerComponent';
+import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
 
 export interface AddTodoProps { }
 
 export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, AppData & StateObject> {
 
-  public updateViewProps(executedActions: Action[]): void { return; }
+  private crudCreator: CrudActionCreator<AppData & StateObject>;
 
-  createMappingActions(): MappingAction<any, any, AddTodoProps, AddTodoViewProps, keyof AddTodoViewProps>[] {
-    return [];
-  }
+  public updateViewProps(executedActions: Action[]): void { return; }
 
   constructor(props: AddTodoProps) {
     super(props, appState.getState(), AddTodoViewSfc);
+    this.crudCreator = getCrudCreator(appState.getState());
   }
 
   /**
@@ -27,7 +28,7 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
     // replace the array immutably
     let newToDos: ToDo[] = [...this.appData.todos];
     newToDos.push(newTodo);
-    let action = new StateCrudAction(ActionId.UPDATE_PROPERTY, this.appData, 'todos', newToDos);
+    let action = this.crudCreator.update('todos', newToDos);
     appState.getManager().actionPerform(action);
   }
 
@@ -37,5 +38,9 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
    */
   public createViewProps(): AddTodoViewProps {
     return { addTodo: this.addTodo.bind(this) };
+  }
+
+  createMappingActions(): GenericContainerMappingTypes<AddTodoProps, AddTodoViewProps, AppData & StateObject>[] {
+    return [];
   }
 }

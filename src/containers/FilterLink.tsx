@@ -1,6 +1,8 @@
 import { FilterLinkViewProps, FilterLinkViewSfc } from '../presenters/FilterLinkView';
 import { AppData, appState, VisibilityFilterId } from '../AppState';
-import { ContainerComponent, StateObject, MappingAction, StateCrudAction, ActionId } from 'manifold-dx';
+import { ContainerComponent, StateObject, StateCrudAction, getCrudCreator, getMappingCreator } from 'manifold-dx';
+import { GenericContainerMappingTypes } from 'manifold-dx/dist/src/components/ContainerComponent';
+import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
 
 export interface FilterLinkProps {
   visibilityFilter: VisibilityFilterId;
@@ -8,24 +10,15 @@ export interface FilterLinkProps {
 
 export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkViewProps, AppData & StateObject> {
 
+  private crudCreator: CrudActionCreator<AppData & StateObject>;
+
   constructor(props: FilterLinkProps) {
     super(props, appState.getState(), FilterLinkViewSfc);
-  }
-
-  createMappingActions(): MappingAction<any, any, FilterLinkProps, FilterLinkViewProps, keyof FilterLinkViewProps>[] {
-    let visibilityMapping = this.createMapping(
-      this.appData,
-      'visibilityFilter',
-      'visibilityFilter',
-      this.updateVisibilityFilter.bind(this)
-    );
-    return [visibilityMapping];
+    this.crudCreator = getCrudCreator(appState.getState());
   }
 
   public onClick(): void {
-    let visibilityAction = new StateCrudAction(
-      ActionId.UPDATE_PROPERTY, this.appData,
-      'visibilityFilter', this.props.visibilityFilter);
+    let visibilityAction = this.crudCreator.update('visibilityFilter', this.props.visibilityFilter);
     appState.getManager().actionPerform(visibilityAction);
   }
 
@@ -41,5 +34,12 @@ export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkVi
 
   public updateVisibilityFilter(action: StateCrudAction<any, any>) {
     this.viewProps.active = this.props.visibilityFilter === this.appData.visibilityFilter;
+  }
+
+  createMappingActions(): GenericContainerMappingTypes<FilterLinkProps, FilterLinkViewProps, AppData & StateObject>[] {
+    let mappingCreator = getMappingCreator(this.appData, this);
+    return [
+      mappingCreator.createMappingAction('visibilityFilter', 'visibilityFilter', this.updateVisibilityFilter.bind(this))
+    ];
   }
 }

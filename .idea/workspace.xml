@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0f7ffa1-76c8-4fb4-9741-b3fdea923781" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/AddTodo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/AddTodo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/FilterLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/FilterLink.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/ToDoList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ToDoList.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="c0f7ffa1-76c8-4fb4-9741-b3fdea923781" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -293,12 +286,12 @@
       <workItem from="1519075013155" duration="5965000" />
       <workItem from="1519643133696" duration="10732000" />
       <workItem from="1520800474664" duration="5177000" />
-      <workItem from="1523193585061" duration="5151000" />
+      <workItem from="1523193585061" duration="5583000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106310000" />
+    <option name="totallyTimeSpent" value="106742000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="20" y="43" width="1400" height="777" extended-state="0" />

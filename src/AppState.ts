@@ -1,4 +1,4 @@
-import { State } from 'manifold-dx';
+import { Store } from 'manifold-dx';
 
 export enum VisibilityFilterId {
   ShowAll,
@@ -18,9 +18,9 @@ export interface AppData {
   visibilityFilter: VisibilityFilterId;
 }
 
-let appData = {
+let appData: AppData = {
   todos: [] as ToDo[],
   visibilityFilter: VisibilityFilterId.ShowAll
 };
 
-export const appState = new State(appData, {});
+export const appState = new Store(appData, {});

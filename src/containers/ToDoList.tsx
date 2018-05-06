@@ -1,8 +1,8 @@
 import { ToDoListView, ToDoListViewProps } from '../presenters/ToDoListView';
 import { AppData, appState, ToDo, VisibilityFilterId } from '../AppState';
 import { ContainerComponent, StateObject, StateCrudAction, getCrudCreator, getMappingCreator } from 'manifold-dx';
-import { GenericContainerMappingTypes } from 'manifold-dx/dist/src/components/ContainerComponent';
 import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
+import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
 
 export interface ToDoListProps {}
 
@@ -49,14 +49,18 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     newTodo.completed = !newTodo.completed;
     let newTodos = ToDoList.newArray(this.appData.todos, index, newTodo);
     let toggleAction = this.crudCreator.update('todos', newTodos);
-    appState.getManager().actionPerform(toggleAction);
+    toggleAction.process();
   }
 
-  createMappingActions(): GenericContainerMappingTypes<ToDoListProps, ToDoListViewProps, AppData & StateObject>[] {
-    let mappingCreator = getMappingCreator(this.appData, this);
-    return [
-      mappingCreator.createMappingAction('todos', 'todos', this.updateVisibleTodos.bind(this)),
-      mappingCreator.createMappingAction('visibilityFilter', 'visibilityFilter', this.updateVisibleTodos.bind(this))
-    ];
+  public appendToMappingActions(
+    // let data: AppData & StateObject = this.appData;
+    actions: AnyMappingAction[]): void {
+    let data: AppData & StateObject = this.appData;
+    let todosMapping = getMappingCreator(data, 'todos')
+      .createPropertyMappingAction(this, 'todos', this.updateVisibleTodos.bind(this));
+    actions.push(todosMapping);
+    let visibilityFilter = getMappingCreator(data, 'visibilityFilter')
+      .createPropertyMappingAction(this, 'visibilityFilter', this.updateVisibleTodos.bind(this));
+    actions.push(visibilityFilter);
   }
 }

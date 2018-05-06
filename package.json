@@ -14,7 +14,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
-    "manifold-dx": "^0.3.0",
+    "manifold-dx": "^0.4.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
@@ -47,7 +47,7 @@
     "@types/node": "^9.3.0",
     "@types/react": "^16.0.35",
     "@types/react-dom": "^16.0.3",
-    "typescript": "^2.6.2"
+    "typescript": "^2.7.2"
   },
   "jest": {
     "collectCoverageFrom": [

@@ -1,8 +1,8 @@
 import { AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
 import { AppData, appState, ToDo } from '../AppState';
 import { Action, ContainerComponent, getCrudCreator, StateObject } from 'manifold-dx';
-import { GenericContainerMappingTypes } from 'manifold-dx/dist/src/components/ContainerComponent';
 import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
+import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
 
 export interface AddTodoProps { }
 
@@ -29,7 +29,7 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
     let newToDos: ToDo[] = [...this.appData.todos];
     newToDos.push(newTodo);
     let action = this.crudCreator.update('todos', newToDos);
-    appState.getManager().actionPerform(action);
+    action.process();
   }
 
   /**
@@ -40,7 +40,8 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
     return { addTodo: this.addTodo.bind(this) };
   }
 
-  createMappingActions(): GenericContainerMappingTypes<AddTodoProps, AddTodoViewProps, AppData & StateObject>[] {
-    return [];
+  appendToMappingActions(actions: AnyMappingAction[])
+  : void {
+    // no-op
   }
 }

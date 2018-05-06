@@ -1,8 +1,8 @@
 import { FilterLinkViewProps, FilterLinkViewSfc } from '../presenters/FilterLinkView';
 import { AppData, appState, VisibilityFilterId } from '../AppState';
 import { ContainerComponent, StateObject, StateCrudAction, getCrudCreator, getMappingCreator } from 'manifold-dx';
-import { GenericContainerMappingTypes } from 'manifold-dx/dist/src/components/ContainerComponent';
 import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
+import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
 
 export interface FilterLinkProps {
   visibilityFilter: VisibilityFilterId;
@@ -19,7 +19,7 @@ export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkVi
 
   public onClick(): void {
     let visibilityAction = this.crudCreator.update('visibilityFilter', this.props.visibilityFilter);
-    appState.getManager().actionPerform(visibilityAction);
+    visibilityAction.process();
   }
 
   public createViewProps(): FilterLinkViewProps {
@@ -36,10 +36,12 @@ export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkVi
     this.viewProps.active = this.props.visibilityFilter === this.appData.visibilityFilter;
   }
 
-  createMappingActions(): GenericContainerMappingTypes<FilterLinkProps, FilterLinkViewProps, AppData & StateObject>[] {
-    let mappingCreator = getMappingCreator(this.appData, this);
-    return [
-      mappingCreator.createMappingAction('visibilityFilter', 'visibilityFilter', this.updateVisibilityFilter.bind(this))
-    ];
+  protected appendToMappingActions(
+    mappingActions: AnyMappingAction[]): void {
+    let mappingCreator = getMappingCreator(this.appData, 'visibilityFilter');
+    let action = mappingCreator.createPropertyMappingAction(
+      this, 'visibilityFilter', this.updateVisibilityFilter.bind(this));
+
+    mappingActions.push(action);
   }
 }

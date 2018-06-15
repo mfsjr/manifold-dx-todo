@@ -14,7 +14,7 @@ const ToDoListViewGenerator = function(props: ToDoListViewProps): ToDoListView {
 export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProps, AppData & StateObject> {
 
   private crudCreator: ActionCreator<AppData & StateObject>;
-
+  // TODO: this should return an array of actions
   public static filterTodos(todos: Array<ToDo>, visibilityFilter: VisibilityFilterId) {
     switch (visibilityFilter) {
       case VisibilityFilterId.ShowCompleted:
@@ -40,11 +40,13 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     };
   }
 
+  // TODO: remove this
   protected updateVisibleTodos(action: StateCrudAction<any, any>): void {
     this.viewProps.todos = ToDoList.filterTodos(this.appData.todos, this.appData.visibilityFilter);
     this.viewProps.visibilityFilter = this.appData.visibilityFilter;
   }
 
+  // TODO: call visibilityFilter here, process actions
   public onClick(index: number) {
     let newTodo = {...this.appData.todos[index]};
     newTodo.completed = !newTodo.completed;

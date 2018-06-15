@@ -23,4 +23,4 @@ let appData: AppData = {
   visibilityFilter: VisibilityFilterId.ShowAll
 };
 
-export const appState = new Store(appData, {});
+export const appStore = new Store(appData, {});

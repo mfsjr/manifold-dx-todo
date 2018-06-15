@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ToDo, VisibilityFilterId } from '../AppState';
+import { ToDo, VisibilityFilterId } from '../AppStore';
 import { ToDoItem } from './ToDoItem';
 
 export interface ToDoListViewProps {

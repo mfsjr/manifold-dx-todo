@@ -1,20 +1,19 @@
 import { AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
-import { AppData, appState, ToDo } from '../AppState';
-import { Action, ContainerComponent, getCrudCreator, StateObject } from 'manifold-dx';
-import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
+import { AppData, appStore, ToDo } from '../AppStore';
+import { Action, ContainerComponent, getArrayActionCreator, StateObject } from 'manifold-dx';
 import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
 
 export interface AddTodoProps { }
 
 export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, AppData & StateObject> {
 
-  private crudCreator: CrudActionCreator<AppData & StateObject>;
+  // private crudCreator = getActionCreator(this.appData);
+  private arrayActionCreator = getArrayActionCreator(this.appData, this.appData.todos);
 
   public updateViewProps(executedActions: Action[]): void { return; }
 
   constructor(props: AddTodoProps) {
-    super(props, appState.getState(), AddTodoViewSfc);
-    this.crudCreator = getCrudCreator(appState.getState());
+    super(props, appStore.getState(), AddTodoViewSfc);
   }
 
   /**
@@ -25,11 +24,16 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
    */
   public addTodo(text: string): void {
     let newTodo: ToDo = {text: text, active: true, completed: false, id: this.appData.todos.length};
-    // replace the array immutably
-    let newToDos: ToDo[] = [...this.appData.todos];
-    newToDos.push(newTodo);
-    let action = this.crudCreator.update('todos', newToDos);
+
+    // // replace the array immutably
+    // let newToDos: ToDo[] = [...this.appData.todos];
+    // newToDos.push(newTodo);
+    // let action = this.crudCreator.update('todos', newToDos);
+    // action.process();
+
+    let action = this.arrayActionCreator.appendElement(newTodo);
     action.process();
+    this.arrayActionCreator.rerenderArray().process();
   }
 
   /**

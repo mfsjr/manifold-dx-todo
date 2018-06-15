@@ -1,7 +1,8 @@
 import { ToDoListView, ToDoListViewProps } from '../presenters/ToDoListView';
-import { AppData, appState, ToDo, VisibilityFilterId } from '../AppState';
-import { ContainerComponent, StateObject, StateCrudAction, getCrudCreator, getMappingCreator } from 'manifold-dx';
-import { CrudActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
+import { AppData, appStore, ToDo, VisibilityFilterId } from '../AppStore';
+import { ContainerComponent, StateObject, StateCrudAction, getActionCreator,
+  getMappingActionCreator } from 'manifold-dx';
+import { ActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
 import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
 
 export interface ToDoListProps {}
@@ -12,7 +13,7 @@ const ToDoListViewGenerator = function(props: ToDoListViewProps): ToDoListView {
 
 export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProps, AppData & StateObject> {
 
-  private crudCreator: CrudActionCreator<AppData & StateObject>;
+  private crudCreator: ActionCreator<AppData & StateObject>;
 
   public static filterTodos(todos: Array<ToDo>, visibilityFilter: VisibilityFilterId) {
     switch (visibilityFilter) {
@@ -27,8 +28,8 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
   }
 
   constructor(containerProps: ToDoListProps) {
-    super(containerProps, appState.getState(), undefined, ToDoListViewGenerator);
-    this.crudCreator = getCrudCreator(this.appData);
+    super(containerProps, appStore.getState(), undefined, ToDoListViewGenerator);
+    this.crudCreator = getActionCreator(this.appData);
   }
 
   public createViewProps(): ToDoListViewProps {
@@ -56,10 +57,10 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     // let data: AppData & StateObject = this.appData;
     actions: AnyMappingAction[]): void {
     let data: AppData & StateObject = this.appData;
-    let todosMapping = getMappingCreator(data, 'todos')
+    let todosMapping = getMappingActionCreator(data, 'todos')
       .createPropertyMappingAction(this, 'todos', this.updateVisibleTodos.bind(this));
     actions.push(todosMapping);
-    let visibilityFilter = getMappingCreator(data, 'visibilityFilter')
+    let visibilityFilter = getMappingActionCreator(data, 'visibilityFilter')
       .createPropertyMappingAction(this, 'visibilityFilter', this.updateVisibleTodos.bind(this));
     actions.push(visibilityFilter);
   }

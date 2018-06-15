@@ -1,4 +1,4 @@
-import { VisibilityFilterId } from '../AppState';
+import { VisibilityFilterId } from '../AppStore';
 import { FilterLink } from '../containers/FilterLink';
 import * as React from 'react';
 import { ReactNode } from 'react';

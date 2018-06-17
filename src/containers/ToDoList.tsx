@@ -61,8 +61,8 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     // let data: AppData & StateObject = this.appData;
     actions: AnyMappingAction[]): void {
     let data: AppData & StateObject = this.appData;
-    let todosMapping = getMappingActionCreator(this.appData, 'todos', {array: this.appData.todos})
-      .createArrayIndexMappingAction(null, this, 'todos', this.updateVisibleTodos.bind(this));
+    let todosMapping = getMappingActionCreator(this.appData, 'todos')
+      .createArrayIndexMappingAction(this.appData.todos, null, this, 'todos', this.updateVisibleTodos.bind(this));
     actions.push(todosMapping);
     let visibilityFilter = getMappingActionCreator(data, 'visibilityFilter')
       .createPropertyMappingAction(this, 'visibilityFilter', this.updateVisibleTodos.bind(this));

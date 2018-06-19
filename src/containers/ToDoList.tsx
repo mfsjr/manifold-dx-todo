@@ -3,7 +3,6 @@ import { AppData, appStore, ToDo, VisibilityFilterId } from '../AppStore';
 import {
   ContainerComponent, StateObject, StateCrudAction, getMappingActionCreator, getArrayActionCreator } from 'manifold-dx';
 import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
-import { Manager } from 'manifold-dx/dist/src/types/Manager';
 
 export interface ToDoListProps {}
 
@@ -51,7 +50,7 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     let newTodo = {...this.appData.todos[index]};
     newTodo.completed = !newTodo.completed;
     let updateAction = this.arrayActionCreator.updateElement(index, newTodo);
-    Manager.get(this.appData).actionProcess(
+    appStore.dispatch(
       updateAction,
       getArrayActionCreator(this.appData, this.appData.todos).rerenderArray()
     );

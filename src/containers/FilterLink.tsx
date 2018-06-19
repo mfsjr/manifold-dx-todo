@@ -20,7 +20,7 @@ export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkVi
 
   public onClick(): void {
     let visibilityAction = this.crudCreator.update('visibilityFilter', this.props.visibilityFilter);
-    visibilityAction.process();
+    visibilityAction.dispatch();
   }
 
   public createViewProps(): FilterLinkViewProps {

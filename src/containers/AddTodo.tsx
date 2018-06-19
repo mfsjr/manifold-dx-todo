@@ -2,7 +2,6 @@ import { AddTodoViewProps, AddTodoViewSfc } from '../presenters/AddTodoView';
 import { AppData, appStore, ToDo } from '../AppStore';
 import { Action, ContainerComponent, getArrayActionCreator, StateObject } from 'manifold-dx';
 import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
-import { Manager } from 'manifold-dx/dist/src/types/Manager';
 
 export interface AddTodoProps { }
 
@@ -26,14 +25,8 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
   public addTodo(text: string): void {
     let newTodo: ToDo = {text: text, active: true, completed: false, id: this.appData.todos.length};
 
-    // // replace the array immutably
-    // let newToDos: ToDo[] = [...this.appData.todos];
-    // newToDos.push(newTodo);
-    // let action = this.crudCreator.update('todos', newToDos);
-    // action.process();
-
     let actions = this.arrayActionCreator.insertElement(this.appData.todos.length, newTodo);
-    Manager.get(this.appData).actionProcess(...actions);
+    appStore.dispatch(...actions);
   }
 
   /**

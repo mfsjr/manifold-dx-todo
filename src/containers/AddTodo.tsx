@@ -7,8 +7,8 @@ export interface AddTodoProps { }
 
 export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, AppData & StateObject> {
 
-  // private crudCreator = getActionCreator(this.appData);
-  private arrayActionCreator = getArrayActionCreator(this.appData, this.appData.todos);
+  // private crudCreator = getActionCreator(this.appState);
+  private arrayActionCreator = getArrayActionCreator(this.appState, this.appState.todos);
 
   public updateViewProps(executedActions: Action[]): void { return; }
 
@@ -23,9 +23,9 @@ export class AddTodo extends ContainerComponent<AddTodoProps, AddTodoViewProps, 
    * @param {string} text
    */
   public addTodo(text: string): void {
-    let newTodo: ToDo = {text: text, active: true, completed: false, id: this.appData.todos.length};
+    let newTodo: ToDo = {text: text, active: true, completed: false, id: this.appState.todos.length};
 
-    let actions = this.arrayActionCreator.insertElement(this.appData.todos.length, newTodo);
+    let actions = this.arrayActionCreator.insertElement(this.appState.todos.length, newTodo);
     appStore.dispatch(...actions);
   }
 

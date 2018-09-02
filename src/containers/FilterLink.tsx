@@ -28,18 +28,18 @@ export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkVi
       children: this.props.children,
       visibilityFilter: this.props.visibilityFilter,
       onClick: this.onClick.bind(this),
-      active: this.props.visibilityFilter === this.appData.visibilityFilter
+      active: this.props.visibilityFilter === this.appState.visibilityFilter
     };
     return viewProps;
   }
 
   public updateVisibilityFilter(action: StateCrudAction<any, any>) {
-    this.viewProps.active = this.props.visibilityFilter === this.appData.visibilityFilter;
+    this.viewProps.active = this.props.visibilityFilter === this.appState.visibilityFilter;
   }
 
   protected appendToMappingActions(
     mappingActions: AnyMappingAction[]): void {
-    let mappingCreator = getMappingActionCreator(this.appData, 'visibilityFilter');
+    let mappingCreator = getMappingActionCreator(this.appState, 'visibilityFilter');
     let action = mappingCreator.createPropertyMappingAction(
       this, 'visibilityFilter', this.updateVisibilityFilter.bind(this));
 

@@ -15,7 +15,7 @@ const ToDoListViewGenerator = function(props: ToDoListViewProps): ToDoListView {
  */
 export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProps, AppData & StateObject> {
 
-  private arrayActionCreator = getArrayActionCreator(this.appData, this.appData.todos);
+  private arrayActionCreator = getArrayActionCreator(this.appState, this.appState.todos);
 
   public static filterTodos(todos: Array<ToDo>, visibilityFilter: VisibilityFilterId) {
     switch (visibilityFilter) {
@@ -35,33 +35,33 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
 
   public createViewProps(): ToDoListViewProps {
     return {
-      todos: this.appData.todos,
+      todos: this.appState.todos,
       onClick: this.onClick.bind(this),
-      visibilityFilter: this.appData.visibilityFilter
+      visibilityFilter: this.appState.visibilityFilter
     };
   }
 
   protected updateVisibleTodos(action: StateCrudAction<any, any>): void {
-    this.viewProps.todos = ToDoList.filterTodos(this.appData.todos, this.appData.visibilityFilter);
-    this.viewProps.visibilityFilter = this.appData.visibilityFilter;
+    this.viewProps.todos = ToDoList.filterTodos(this.appState.todos, this.appState.visibilityFilter);
+    this.viewProps.visibilityFilter = this.appState.visibilityFilter;
   }
 
   public onClick(index: number) {
-    let newTodo = {...this.appData.todos[index]};
+    let newTodo = {...this.appState.todos[index]};
     newTodo.completed = !newTodo.completed;
     let updateAction = this.arrayActionCreator.updateElement(index, newTodo);
     appStore.dispatch(
       updateAction,
-      getArrayActionCreator(this.appData, this.appData.todos).rerenderArray()
+      getArrayActionCreator(this.appState, this.appState.todos).rerenderArray()
     );
   }
 
   public appendToMappingActions(
-    // let data: AppData & StateObject = this.appData;
+    // let data: AppData & StateObject = this.appState;
     actions: AnyMappingAction[]): void {
-    let data: AppData & StateObject = this.appData;
-    let todosMapping = getMappingActionCreator(this.appData, 'todos')
-      .createArrayIndexMappingAction(this.appData.todos, null, this, 'todos', this.updateVisibleTodos.bind(this));
+    let data: AppData & StateObject = this.appState;
+    let todosMapping = getMappingActionCreator(this.appState, 'todos')
+      .createArrayIndexMappingAction(this.appState.todos, null, this, 'todos', this.updateVisibleTodos.bind(this));
     actions.push(todosMapping);
     let visibilityFilter = getMappingActionCreator(data, 'visibilityFilter')
       .createPropertyMappingAction(this, 'visibilityFilter', this.updateVisibleTodos.bind(this));

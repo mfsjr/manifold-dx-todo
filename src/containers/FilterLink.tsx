@@ -2,7 +2,6 @@ import { FilterLinkViewProps, FilterLinkViewSfc } from '../presenters/FilterLink
 import { AppData, appStore, VisibilityFilterId } from '../AppStore';
 import { ContainerComponent, StateObject, StateCrudAction, getActionCreator,
   getMappingActionCreator } from 'manifold-dx';
-import { ActionCreator } from 'manifold-dx/dist/src/actions/actionCreators';
 import { AnyMappingAction } from 'manifold-dx/dist/src/actions/actions';
 
 export interface FilterLinkProps {
@@ -11,16 +10,12 @@ export interface FilterLinkProps {
 
 export class FilterLink extends ContainerComponent<FilterLinkProps, FilterLinkViewProps, AppData & StateObject> {
 
-  private crudCreator: ActionCreator<AppData & StateObject>;
-
   constructor(props: FilterLinkProps) {
     super(props, appStore.getState(), FilterLinkViewSfc);
-    this.crudCreator = getActionCreator(appStore.getState());
   }
 
   public onClick(): void {
-    let visibilityAction = this.crudCreator.update('visibilityFilter', this.props.visibilityFilter);
-    visibilityAction.dispatch();
+    getActionCreator(this.appState).update('visibilityFilter', this.props.visibilityFilter).dispatch();
   }
 
   public createViewProps(): FilterLinkViewProps {

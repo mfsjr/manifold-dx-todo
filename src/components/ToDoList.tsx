@@ -60,14 +60,15 @@ export class ToDoList extends ContainerComponent<ToDoListProps, ToDoListViewProp
     );
   }
 
+  /**
+   * Note that mappings let you define functinos that can be executed whenever updates from app state are performed.
+   * @param actions
+   */
   public appendToMappingActions(
-    // let data: AppData & StateObject = this.appState;
     actions: AnyMappingAction[]): void {
     let data: AppData & StateObject = this.appState;
-    // let todosMapping = getMappingActionCreator(this.appState, 'todos')
-    //   .createArrayIndexMappingAction(this.appState.todos, null, this, 'todos', this.updateVisibleTodos.bind(this));
     let todosMapping = getMappingActionCreator(this.appState, 'todos')
-      .createPropertyMappingAction(this, 'todos');
+      .createPropertyMappingAction(this, 'todos', this.updateVisibleTodos.bind(this));
     actions.push(todosMapping);
     let visibilityFilter = getMappingActionCreator(data, 'visibilityFilter')
       .createPropertyMappingAction(this, 'visibilityFilter', this.updateVisibleTodos.bind(this));
